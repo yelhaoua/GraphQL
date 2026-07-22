@@ -1,0 +1,160 @@
+/* --- Google Font Import --- */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+    --primary-sky: #38bdf8;
+    --primary-sky-hover: #0284c7;
+    --deep-indigo: #0f172a;
+    --soft-slate: #64748b;
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --error-color: #ef4444;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Page Background with Sky-Blue Gradient Blobs */
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f9ff;
+    background-image:
+        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.25) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.2) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(224, 242, 254, 0.5) 0px, transparent 100%);
+    background-attachment: fixed;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+}
+
+/* Glassmorphism Card Style */
+.login-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 40px 32px;
+    box-shadow:
+        0 20px 40px -15px rgba(14, 165, 233, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 25px 50px -12px rgba(14, 165, 233, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+/* Header Section */
+.form_Header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.form_Header h1 {
+    color: var(--deep-indigo);
+    font-size: 1.875rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin-bottom: 6px;
+}
+
+.form_Header p {
+    color: var(--soft-slate);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* Inputs Section */
+.form-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input_field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input_field label {
+    color: var(--deep-indigo);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.input_field input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1.5px solid #e2e8f0;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--deep-indigo);
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.input_field input::placeholder {
+    color: #94a3b8;
+}
+
+/* Focus and Active Glow Effects */
+.input_field input:focus {
+    border-color: var(--primary-sky);
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15);
+}
+
+/* Dynamic Error Text */
+.error-msg {
+    color: var(--error-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    min-height: 20px;
+    margin-bottom: 12px;
+}
+
+/* Glowing Sky Blue Button */
+.submit-btn {
+    width: 100%;
+    margin-top: 24px;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 10px 20px -5px rgba(2, 132, 199, 0.4);
+    transition: all 0.2s ease-in-out;
+}
+
+.submit-btn:hover {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    box-shadow: 0 12px 24px -5px rgba(2, 132, 199, 0.5);
+    transform: translateY(-1px);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 12px -4px rgba(2, 132, 199, 0.4);
+}
