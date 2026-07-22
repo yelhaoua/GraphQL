@@ -1,63 +1,66 @@
 import LogInPage from "./auth/logIn-page.js";
-
-window.addEventListener("click", (e) => {
-  const anchor = e.target.closest("a");
-
-  if (!anchor) {
-    return;
-  }
-
-  e.preventDefault();
-  urlRoute(anchor);
-});
+import HomePage from "./main/home.js";
 
 const Routes = {
   "/": {
-    title: "home",
+    title: "Home",
     desc: "home page",
     template: "../templates/home.html",
+    init: HomePage,
   },
   "/login": {
-    title: "lohin",
+    title: "Login",
     desc: "login page",
     template: "../templates/login.html",
     init: LogInPage,
   },
   404: {
-    title: "not found",
+    title: "Page Not Found",
     desc: "Page not Found",
     template: "../templates/home.html",
   },
 };
 
-const urlRoute = (anchor) => {
-  const href = anchor.getAttribute("href");
-
-  window.history.pushState({}, "", href);
-  urlLocationHandler();
+const getPath = () => {
+  const hash = window.location.hash.slice(1);
+  return hash || "/";
 };
 
 const urlLocationHandler = async () => {
-  let location = window.location.pathname;
-
-  if (location.length === 0) {
-    location = "/";
-  }
+  const location = getPath();
 
   const route = Routes[location] || Routes[404];
-  console.log(route);
 
-  const html = await fetch(route.template).then((response) => {
-    return response.text();
-  });
+  try {
+    const html = await fetch(route.template).then((res) => {
+      if (!res.ok) throw new Error(`HTTP ${res.status} - Template not found`);
+      return res.text();
+    });
 
-  document.getElementById("app").innerHTML = html;
-  if (typeof route.init === "function") {
-    route.init();
+    document.getElementById("app").innerHTML = html;
+
+    if (typeof route.init === "function") {
+      route.init();
+    }
+
+    document.title = route.title;
+  } catch (err) {
+    console.error("Failed to render page route:", err);
   }
-  document.title = route.title;
 };
 
-window.addEventListener("popstate", urlLocationHandler);
+window.addEventListener("click", (e) => {
+  const anchor = e.target.closest("a");
+  if (!anchor) return;
 
+  const href = anchor.getAttribute("href");
+
+  if (href && (href.startsWith("#/") || href.startsWith("/"))) {
+    e.preventDefault();
+    const cleanPath = href.startsWith("#") ? href : `#${href}`;
+    window.location.hash = cleanPath;
+  }
+});
+
+window.addEventListener("hashchange", urlLocationHandler);
 window.addEventListener("DOMContentLoaded", urlLocationHandler);
