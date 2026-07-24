@@ -1,4 +1,7 @@
-export default function HomePage() {
+import GetUserInfo from "../pages/actions/userInfroAction.js";
+import UserInfo from "../pages/userInfo.js";
+
+export default async function HomePage() {
   console.log("home page ");
 
   const jwt = localStorage.getItem("jwt_token");
@@ -8,4 +11,7 @@ export default function HomePage() {
     window.location.href = "#/login";
     return;
   }
+ 
+
+  UserInfo();
 }
