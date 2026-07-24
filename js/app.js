@@ -1,12 +1,19 @@
 import LogInPage from "./auth/logIn-page.js";
-import HomePage from "./main/home.js";
+import GetUserInfo from "./pages/getUserInfo.js";
+import RenderTransaction from "./pages/renderTransactions.js";
 
 const Routes = {
   "/": {
-    title: "Home",
-    desc: "home page",
+    title: "profile",
+    desc: "profile page",
     template: "../templates/home.html",
-    init: HomePage,
+    init: GetUserInfo,
+  },
+  "/transaction": {
+    title: "transaction",
+    desc: "transaction page",
+    template: "../templates/home.html",
+    init: RenderTransaction,
   },
   "/login": {
     title: "Login",

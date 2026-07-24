@@ -1,7 +1,12 @@
 import LogInAction from "./action.js";
 
 export default function LogInPage() {
-  document.getElementById("nav_links").innerHTML = "";
+  console.log("ffff");
+
+  const nav = document.getElementById("nav_links");
+  if (nav) {
+    nav.innerHTML = "";
+  }
   const link = document.querySelector(`link[rel="stylesheet"]`);
   link.href = "../../assetes/login.css";
   const logIn = document.getElementById("login_form");

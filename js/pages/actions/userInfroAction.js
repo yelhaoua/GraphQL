@@ -1,17 +1,32 @@
 export default async function GetUserInfoAction() {
   const query = `
-              query{
-                user : user {
-                  id
-                  login
-                  firstName
-                  lastName
-                  email
-                  avatarUrl
-                  campus
-                  auditRatio
-                }
-              }
+{
+  user: user {
+    id
+    login
+    firstName
+    lastName
+    email
+    avatarUrl
+    campus
+    auditRatio
+  }
+  allAudites: user {
+    totalUp
+    totalDown
+    audits_aggregate(where: {closureType: {_in: [succeeded, failed]}}) {
+      nodes {
+        closureType
+        group {
+          object {
+            type
+            name
+          }
+        }
+      }
+    }
+  }
+}
   `;
   const jwt = localStorage.getItem("jwt_token");
 
@@ -27,7 +42,8 @@ export default async function GetUserInfoAction() {
       },
     );
     const res = await req.json();
-
+    console.log(res);
+    
     if (!req.ok) {
       return {
         success: false,
@@ -37,7 +53,7 @@ export default async function GetUserInfoAction() {
 
     return {
       success: true,
-      data: res.data.user,
+      data: res.data,
     };
   } catch (error) {
     return {

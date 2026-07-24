@@ -3,7 +3,7 @@
 :root {
     --primary-sky: #38bdf8;
     --primary-sky-hover: #0284c7;
-    --deep-indigo: #0f172a;
+    --deep-indigo: #0D0D0D;
     --soft-slate: #64748b;
     --glass-bg: rgba(255, 255, 255, 0.85);
     --glass-border: rgba(255, 255, 255, 0.6);
@@ -23,62 +23,101 @@
 body {
     width: 100%;
     height: 100dvh;
+    background-color: var(--deep-indigo);
+}
+
+
+.dataContainer {
+    display: flex;
+    width: 95%;
+    padding: 10px 0px;
+    height: calc(100% - 60px);
+    margin-left: auto;
+    margin-right: auto;
+    gap: 8px;
+}
+
+.container {
+    padding: 20px;
 }
 
 .maincontainer {
-
     height: 100vh;
-    display: flex;
 }
 
 .navSection {
-    background-color: #1a1e29;
+    background-color: #090909;
     color: #ffffff;
     padding: 0 1.5rem;
-    width: 150px;
     display: flex;
-    flex-direction: column;
+
 }
 
 #nav_links {
     display: flex;
+    width: 100%;
     justify-content: space-between;
-    flex-direction: column;
     align-items: center;
-    height: 60px;
+    padding: 10px 0px;
 }
 
 .logo {
     font-size: 1.4rem;
     font-weight: bold;
-    color: #e10098;
+    color: #0049D1;
+    display: flex;
+    gap: 8px;
+    justify-content: start;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+}
+
+.logo h4 {
+    font-size: 10px;
+    color: #636363;
+}
+
+.logo p {
+    font-size: 14px;
+    color: white;
 }
 
 .navlinks a {
-    color: #ffffff;
+    padding: 10px 15px;
+    color: #636363;
     text-decoration: none;
     font-weight: 500;
 }
 
 .logout {
     cursor: pointer;
-    color: #ff5f56;
+    color: #636363;
     font-weight: 500;
+    background-color: #151515;
+    padding: 8px 15px;
+    border-radius: 10px;
+    border: 1px solid #636363;
 }
 
 .lefsideContainer {
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    height: 100%;
+    grid-template-columns: 1fr 7fr;
     gap: 1.5rem;
-    padding: 1.5rem;
-    flex: 1;
+
 }
 
 .dataSection {
-    background-color: #ffffff;
     border-radius: 8px;
     padding: 1.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    flex: 1;
+    background-color: #090909;
 }
 
 .profileSection {
@@ -86,6 +125,82 @@ body {
     border-radius: 8px;
     padding: 1.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.transaction_header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.totale_xp,
+.current_level,
+.totale_transactions {
+    flex: 1;
+    background-color: #151515;
+    color: #636363;
+    border: 1px solid #636363;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+
+.totale_xp h3,
+.current_level h3,
+.totale_transactions h3 {
+    font-size: 50px;
+    font-weight: bold;
+    color: white;
+    margin-top: 5px;
+}
+
+.transaction_container {
+    margin-top: 10px;
+}
+
+
+.main_Transaction {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.transaction_container .transaction_desc {
+    font-size: 30px;
+    color: white;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.sigle_transaction_contaner {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #636363;
+    font-size: 16px;
+    color: #636363;
+    background-color: #151515;
+    border-radius: 10px;
+}
+
+.type_transaction,
+.transaction_xp,
+.transaction_time {
+    flex: 1;
+}
+
+.transaction_xp {
+    text-align: center;
+}
+
+.transaction_time {
+    text-align: end;
 }
 
 @media (max-width: 768px) {
