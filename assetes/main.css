@@ -195,12 +195,66 @@ body {
     flex: 1;
 }
 
+.profile_Image {
+    height: 150px;
+    width: 150px;
+}
+
 .transaction_xp {
     text-align: center;
 }
 
 .transaction_time {
     text-align: end;
+}
+
+.userInfo_container {
+    padding: 5px;
+    display: flex;
+    gap: 10px;
+    height: 100%;
+    width: 100%;
+}
+
+.userData_container,
+.ratio_contaner {
+    padding: 20px;
+    background-color: #151515;
+    border: 1px solid #636363;
+    border-radius: 10px;
+}
+
+.ratio_contaner {
+    flex: 1;
+}
+
+.userData_container p {
+    color: #636363;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 7px;
+}
+
+.userData_container .p_user,
+.ratio_contaner p {
+    color: #636363;
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 7px;
+}
+
+/* .info_values div {
+    display: flex;
+    gap: 3px;
+}
+
+.info_values p,
+.info_values h3 {
+    flex: 1;
+} */
+
+.userData_container h3 {
+    color: white;
 }
 
 @media (max-width: 768px) {
