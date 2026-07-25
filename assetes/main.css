@@ -225,7 +225,16 @@ body {
 }
 
 .ratio_contaner {
+
     flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.rateing_holder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .userData_container p {
@@ -238,9 +247,32 @@ body {
 .userData_container .p_user,
 .ratio_contaner p {
     color: #636363;
-    font-size: 40px;
+    font-size: 15px;
     font-weight: bold;
     margin-top: 7px;
+}
+
+.Rating_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.ratingContaner {
+    padding: 7px;
+    background-color: #151515;
+    border: 1px solid #636363;
+    border-radius: 10px;
+    width: 150px;
+
+}
+
+.ratingContaner p,
+.ratingContaner h3 {
+
+    font-size: 13px;
 }
 
 /* .info_values div {
@@ -255,6 +287,16 @@ body {
 
 .userData_container h3 {
     color: white;
+}
+
+.raio_circle_Container {
+    display: flex;
+
+    justify-content: center;
+}
+
+.raio_circle_Container svg {
+    height: 300px;
 }
 
 @media (max-width: 768px) {
