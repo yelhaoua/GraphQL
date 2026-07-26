@@ -3,6 +3,7 @@ export default async function GetUserInfoAction() {
 {
   user: user {
     id
+    attrs
     login
     firstName
     lastName
@@ -43,7 +44,7 @@ export default async function GetUserInfoAction() {
     );
     const res = await req.json();
     console.log(res);
-    
+
     if (!req.ok) {
       return {
         success: false,

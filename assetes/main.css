@@ -41,9 +41,6 @@ body {
     padding: 20px;
 }
 
-.maincontainer {
-    height: 100vh;
-}
 
 .navSection {
     background-color: #090909;
@@ -198,6 +195,7 @@ body {
 .profile_Image {
     height: 150px;
     width: 150px;
+    border-radius: 100%;
 }
 
 .transaction_xp {
@@ -214,6 +212,8 @@ body {
     gap: 10px;
     height: 100%;
     width: 100%;
+
+    flex-direction: column;
 }
 
 .userData_container,
@@ -231,6 +231,14 @@ body {
     position: relative;
 }
 
+.ratingContaner div,
+.UpAndDownContaner div {
+    color: #636363;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
 .rateing_holder {
     display: flex;
     justify-content: center;
@@ -244,12 +252,23 @@ body {
     margin-top: 7px;
 }
 
-.userData_container .p_user,
+
+
+.userData_container,
 .ratio_contaner p {
     color: #636363;
     font-size: 15px;
     font-weight: bold;
     margin-top: 7px;
+}
+
+.p_user {
+    color: #636363;
+    font-size: 30px !important;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 7px;
+
 }
 
 .Rating_container {
@@ -260,7 +279,8 @@ body {
     gap: 10px;
 }
 
-.ratingContaner {
+.ratingContaner,
+.UpAndDownContaner {
     padding: 7px;
     background-color: #151515;
     border: 1px solid #636363;
@@ -269,21 +289,25 @@ body {
 
 }
 
+.data_user_Info {
+    display: flex;
+    gap: 10px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
 .ratingContaner p,
 .ratingContaner h3 {
 
     font-size: 13px;
 }
 
-/* .info_values div {
+.info_values div {
     display: flex;
-    gap: 3px;
+    gap: 10px;
 }
 
-.info_values p,
-.info_values h3 {
-    flex: 1;
-} */
+
 
 .userData_container h3 {
     color: white;

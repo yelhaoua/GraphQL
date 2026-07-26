@@ -17,6 +17,13 @@ export default async function RenderProfile(res) {
   document.querySelector(".auditratio").innerHTML = Number(
     res.data.user[0].auditRatio,
   ).toFixed(3);
+  document.querySelector(".user_addressCity").innerHTML =
+    res.data.user[0].attrs.addressCity;
+  document.querySelector(".user_gender").innerHTML =
+    res.data.user[0].attrs.gender;
+  document.querySelector(".user_tel").innerHTML = res.data.user[0].attrs.tel;
+  document.querySelector(".user_scholarLevel").innerHTML =
+    res.data.user[0].attrs.scholarLevel;
 
   let TotalFaile = 0;
   let TotaleSucceeded = 0;
@@ -53,7 +60,7 @@ export default async function RenderProfile(res) {
     cy="200"
     r="${radius}"
     fill="none"
-    stroke="#090909"
+    stroke="red"
     stroke-width="10"
   />
 
@@ -62,7 +69,7 @@ export default async function RenderProfile(res) {
     cy="200"
     r="${radius}"
     fill="none"
-    stroke="#636363"
+    stroke="green"
     stroke-width="10"
     stroke-dasharray="${greenPart} ${circumference - greenPart}"
     stroke-linecap="round"
@@ -74,7 +81,18 @@ export default async function RenderProfile(res) {
 
   document.querySelector(".raio_circle_Container").innerHTML = svg;
 
+  const TotaleUp = res.data.allAudites[0].totalUp / 1000000;
+
+  const TotaleDown = res.data.allAudites[0].totalDown / 1000000;
+
   document.querySelector(".succeededrate").innerHTML =
     `${Math.round(SucceededRate)}%`;
-  document.querySelector(".fialerate").innerHTML = `${Math.round(FialeRate)}%`;
+  document.querySelector(".totaleUpValue").innerHTML = `${
+    TotaleUp >= 1 ? ` ${TotaleUp.toFixed(2)} MB` : ` ${TotaleUp.toFixed(2)} KB`
+  }`;
+  document.querySelector(".totaleDownValue").innerHTML = `${
+    TotaleDown >= 1
+      ? ` ${TotaleDown.toFixed(2)} MB`
+      : ` ${TotaleDown.toFixed(2)} KB`
+  }`;
 }
