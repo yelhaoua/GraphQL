@@ -43,21 +43,12 @@ function createDynamicGraphSVG(userData = [], options = {}) {
     width = 800,
     height = 400,
     padding = 60,
-    lineColor = "#151515",
+    lineColor = "#d9d5d5",
     fillColor = "#636363",
     gridColor = "#000000",
     textColor = "#636363",
   } = options;
-
-  const filteredData = (userData || []).filter((item) => item.amount >= 1000);
-
-  if (filteredData.length === 0) {
-    return `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
-      <text x="50%" y="50%" text-anchor="middle" fill="${textColor}">No data available</text>
-    </svg>`;
-  }
-
-  const sorted = [...filteredData].sort(
+  const sorted = userData.sort(
     (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
   );
 
@@ -72,10 +63,18 @@ function createDynamicGraphSVG(userData = [], options = {}) {
     };
   });
 
+  const maxVal = Math.max(...processedData.map((d) => d.cumAmount));
+
+  if (userData.length === 0) {
+    return `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+      <text x="50%" y="50%" text-anchor="middle" fill="${textColor}">No data available</text>
+    </svg>`;
+  }
+
   const graphWidth = width - padding * 2;
   const graphHeight = height - padding * 2;
 
-  const maxVal = Math.max(...processedData.map((d) => d.cumAmount)) * 1.1; // 10% headroom
+  console.log(maxVal);
 
   const points = processedData.map((d, index) => {
     let x =
@@ -148,7 +147,7 @@ function createDynamicGraphSVG(userData = [], options = {}) {
     .join("");
 
   return `
-    <svg viewBox="0 0 ${width} ${height}" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="font-family: sans-serif; background: #ffffff; border-radius: 8px;">
+    <svg viewBox="0 0 ${width} ${height}" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="font-family: sans-serif; background: #151515; border-radius: 8px;">
       <style>
         .pointGroup { cursor: pointer; transition: transform 0.2s; }
         .pointGroup:hover circle { r: 6; fill: #636363; }

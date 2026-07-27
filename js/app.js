@@ -1,4 +1,5 @@
 import LogInPage from "./auth/logIn-page.js";
+import logout from "./auth/logout.js";
 import RenderProfile from "./pages/renderProfile.js";
 import RenderProgress from "./pages/renderProgress.js";
 import RenderTransaction from "./pages/renderTransactions.js";
@@ -21,6 +22,12 @@ const Routes = {
     desc: "login page",
     template: "../templates/login.html",
     init: LogInPage,
+  },
+  "/logout": {
+    title: "logout",
+    desc: "logout page",
+    template: "../templates/home.html",
+    init: logout,
   },
   "/progress": {
     title: "Progress",

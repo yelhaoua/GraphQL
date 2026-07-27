@@ -2,16 +2,20 @@ import GetUserInfoAction from "./actions/userInfroAction.js";
 import RenderNavBar from "./renderNavBar.js";
 
 export default async function RenderProfile() {
-  RenderNavBar();
-  const id = localStorage.getItem("user_Id");
-  if (!id) { 
+  await RenderNavBar();
+  const id = await localStorage.getItem("user_Id");
+  if (!id) {
+    console.log("not");
+
     //Banner
-    return
+    return;
   }
   const res = await GetUserInfoAction(id);
   const html = await fetch("../../templates/userInfo.html").then((res) =>
     res.text(),
   );
+
+
   document.querySelector(".dataSection").innerHTML = html;
   document.querySelector(".profile_Image").src = res.data.user[0].avatarUrl;
 
@@ -94,7 +98,7 @@ export default async function RenderProfile() {
   document.querySelector(".totaleUpValue").innerHTML = `${
     TotaleUp >= 1 ? ` ${TotaleUp.toFixed(2)} MB` : ` ${TotaleUp.toFixed(2)} KB`
   }`;
-  document.querySelector(".totaleDownValue").innerHTML = `${
+  document.querySelector(".fialerate").innerHTML = `${
     TotaleDown >= 1
       ? ` ${TotaleDown.toFixed(2)} MB`
       : ` ${TotaleDown.toFixed(2)} KB`

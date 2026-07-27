@@ -1,14 +1,18 @@
 import LogInAction from "./action.js";
 
 export default function LogInPage() {
-  console.log("ffff");
+  const jwt = localStorage.getItem("jwt_token")
+
+  if (jwt) { 
+    window.location.href = "#/"
+    return
+  }
 
   const nav = document.getElementById("nav_links");
   if (nav) {
     nav.innerHTML = "";
   }
-  const link = document.querySelector(`link[rel="stylesheet"]`);
-  link.href = "../../assetes/login.css";
+
   const logIn = document.getElementById("login_form");
   if (!logIn) {
     console.log("Not form Found");
@@ -26,6 +30,7 @@ export default function LogInPage() {
       return;
     }
     localStorage.setItem("jwt_token", res.jwt);
+    
     window.location.href = "#/";
     console.log(res, 2);
   });

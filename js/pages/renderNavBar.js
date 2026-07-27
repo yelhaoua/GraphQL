@@ -1,11 +1,18 @@
 import GetUserInfoAction from "./actions/userInfroAction.js";
 
 export default async function RenderNavBar() {
+  const jwt = localStorage.getItem("jwt_token");
+
+  if (!jwt) {
+    window.location.href = "#/login";
+  }
   const res = await GetUserInfoAction();
   if (!res.success) {
     //Banner
     return;
   }
+  console.log(res);
+
   localStorage.setItem("user_Id", res.data.user[0].id);
 
   document.querySelector(".user_image").src = res.data.user[0].avatarUrl;
