@@ -43,8 +43,6 @@ export default async function GetUserInfoAction() {
       },
     );
     const res = await req.json();
-    console.log(res);
-
     if (!req.ok) {
       return {
         success: false,

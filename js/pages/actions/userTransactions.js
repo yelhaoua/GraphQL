@@ -1,11 +1,11 @@
 export default async function GetUserTransaction() {
-  const id = localStorage.getItem("user_Id")
-  
-  if (!id) { 
-   return {
-     success: false,
-     error : "log in pleas"
-   };
+  const id = localStorage.getItem("user_Id");
+
+  if (!id) {
+    return {
+      success: false,
+      error: "log in pleas",
+    };
   }
 
   const query = `
@@ -49,8 +49,6 @@ query GetTransaction($id: Int!) {
     );
 
     const res = await req.json();
-    console.log(res);
-
     if (!req.ok) {
       return {
         success: false,

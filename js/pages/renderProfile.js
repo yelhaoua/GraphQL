@@ -5,16 +5,13 @@ export default async function RenderProfile() {
   await RenderNavBar();
   const id = await localStorage.getItem("user_Id");
   if (!id) {
-    console.log("not");
-
-    //Banner
+    window.location.href == "#/login";
     return;
   }
   const res = await GetUserInfoAction(id);
   const html = await fetch("../../templates/userInfo.html").then((res) =>
     res.text(),
   );
-
 
   document.querySelector(".dataSection").innerHTML = html;
   document.querySelector(".profile_Image").src = res.data.user[0].avatarUrl;

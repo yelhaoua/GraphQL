@@ -5,27 +5,18 @@ export default async function RenderTransaction() {
   RenderNavBar();
   const id = localStorage.getItem("user_Id");
   if (!id) {
-    //Banner
+    window.location.href = "#/login";
     return;
   }
 
   let res = await GetUserTransaction(id);
-  if (!res.success) {
-    //Banner
-    return;
-  }
   res = res.data;
   let totale = 0;
-  console.log(res.data.transaction);
-
   res.data.transaction.map((el) => {
     totale += el.amount;
   });
 
   totale = totale / 1000;
-
-  console.log(totale);
-
   const html = await fetch("../../templates/transactionsInfoSection.html").then(
     (res) => res.text(),
   );
@@ -36,8 +27,6 @@ export default async function RenderTransaction() {
     totale >= 1000 ? `${Math.round(totale)} MB` : `${Math.round(totale)} KB`;
   document.querySelector(".Totale_transaction_value").innerHTML =
     res.data.transaction.length;
-  console.log(res.data.levele[0].amount, "111111");
-
   document.querySelector(".current_level_value").innerHTML =
     res.data.levele[0].amount;
 

@@ -5,16 +5,10 @@ export default async function RenderNavBar() {
 
   if (!jwt) {
     window.location.href = "#/login";
-  }
-  const res = await GetUserInfoAction();
-  if (!res.success) {
-    //Banner
     return;
   }
-  console.log(res);
-
+  const res = await GetUserInfoAction();
   localStorage.setItem("user_Id", res.data.user[0].id);
-
   document.querySelector(".user_image").src = res.data.user[0].avatarUrl;
   document.querySelector(".user_login").innerHTML =
     res.data.user[0].firstName + " " + res.data.user[0].lastName;

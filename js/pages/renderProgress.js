@@ -16,12 +16,9 @@ export default async function RenderProgress() {
     res.text(),
   );
   document.querySelector(".dataSection").innerHTML = html;
-  console.log(resProgress.data);
-
   document.querySelector(".chart_Progrese").innerHTML = createDynamicGraphSVG(
     resProgress.data.data.user[0].moduleTransaction,
   );
-  console.log(resProgress);
 }
 
 const formatBytes = (val) => {
@@ -73,9 +70,6 @@ function createDynamicGraphSVG(userData = [], options = {}) {
 
   const graphWidth = width - padding * 2;
   const graphHeight = height - padding * 2;
-
-  console.log(maxVal);
-
   const points = processedData.map((d, index) => {
     let x =
       padding +
