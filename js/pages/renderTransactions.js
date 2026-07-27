@@ -2,7 +2,7 @@ import GetUserTransaction from "./actions/userTransactions.js";
 import RenderNavBar from "./renderNavBar.js";
 
 export default async function RenderTransaction() {
-  RenderNavBar();
+  await RenderNavBar();
   const id = localStorage.getItem("user_Id");
   if (!id) {
     window.location.href = "#/login";

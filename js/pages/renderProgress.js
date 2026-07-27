@@ -3,7 +3,7 @@ import RenderNavBar from "./renderNavBar.js";
 import RenderProfile from "./renderProfile.js";
 
 export default async function RenderProgress() {
-  RenderNavBar();
+  await RenderNavBar();
   const id = localStorage.getItem("user_Id");
 
   if (!id) {
