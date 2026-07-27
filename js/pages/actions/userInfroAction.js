@@ -37,6 +37,7 @@ export default async function GetUserInfoAction() {
       {
         method: "POST",
         headers: {
+          "Content-Type": "application/json",
           authorization: `Bearer ${jwt}`,
         },
         body: JSON.stringify({ query }),

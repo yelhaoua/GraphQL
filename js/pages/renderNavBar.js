@@ -7,9 +7,25 @@ export default async function RenderNavBar() {
     window.location.href = "#/login";
     return;
   }
+
   const res = await GetUserInfoAction();
-  localStorage.setItem("user_Id", res.data.user[0].id);
-  document.querySelector(".user_image").src = res.data.user[0].avatarUrl;
-  document.querySelector(".user_login").innerHTML =
-    res.data.user[0].firstName + " " + res.data.user[0].lastName;
+  if (!res.success || !res.data?.user?.length) {
+    localStorage.removeItem("jwt_token");
+    window.location.href = "#/login";
+    return;
+  }
+
+  const user = res.data.user[0];
+  localStorage.setItem("user_Id", user.id);
+
+  const userImage = document.querySelector(".user_image");
+  const userLogin = document.querySelector(".user_login");
+
+  if (userImage) {
+    userImage.src = user.avatarUrl || "";
+  }
+  if (userLogin) {
+    userLogin.innerHTML =
+      `${user.firstName || ""} ${user.lastName || ""}`.trim();
+  }
 }

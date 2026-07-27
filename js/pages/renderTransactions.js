@@ -9,11 +9,18 @@ export default async function RenderTransaction() {
     return;
   }
 
-  let res = await GetUserTransaction(id);
-  res = res.data;
+  const res = await GetUserTransaction(id);
+  if (!res.success || !res.data?.data) {
+    document.querySelector(".dataSection").innerHTML =
+      `<div class="error-msg">Unable to load transactions.</div>`;
+    return;
+  }
+
+  const responseData = res.data.data;
+  const transactionList = responseData.transaction || [];
   let totale = 0;
-  res.data.transaction.map((el) => {
-    totale += el.amount;
+  transactionList.forEach((el) => {
+    totale += el.amount || 0;
   });
 
   totale = totale / 1000;
@@ -26,20 +33,25 @@ export default async function RenderTransaction() {
   document.querySelector(".Totale_xp_value").innerHTML =
     totale >= 1000 ? `${Math.round(totale)} MB` : `${Math.round(totale)} KB`;
   document.querySelector(".Totale_transaction_value").innerHTML =
-    res.data.transaction.length;
-  document.querySelector(".current_level_value").innerHTML =
-    res.data.levele[0].amount;
+    transactionList.length;
 
-  let alltransaction = "";
-  res.data.transaction.map((el) => {
-    alltransaction += `
+  const currentLevel = responseData.levele?.[0]?.amount ?? 0;
+  document.querySelector(".current_level_value").innerHTML = currentLevel;
+
+  const alltransaction = transactionList
+    .map((el) => {
+      const type = el.object?.type || "Unknown";
+      const name = el.object?.name || "Untitled";
+      const status = el.progress?.isDone ? "Finished" : "Waiting";
+      return `
     <div class="sigle_transaction_contaner">
-    <div class="type_transaction">${el.object.type} -> ${el.object.name}</div>
-    <div class="transaction_xp">${el.amount}</div>
-    <div class="transaction_time">${el.progress ? "Finished" : "Waiting"}</div>
+      <div class="type_transaction">${type} -> ${name}</div>
+      <div class="transaction_xp">${el.amount || 0}</div>
+      <div class="transaction_time">${status}</div>
     </div>
   `;
-  });
+    })
+    .join("");
 
   document.querySelector(".main_Transaction").innerHTML = alltransaction;
 }

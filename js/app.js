@@ -6,35 +6,40 @@ import RenderTransaction from "./pages/renderTransactions.js";
 
 const Routes = {
   "/": {
-    title: "profile",
+    title: "Profile",
     desc: "profile page",
     template: "../templates/home.html",
     init: RenderProfile,
   },
+
   "/transaction": {
-    title: "transaction",
+    title: "Transaction",
     desc: "transaction page",
     template: "../templates/home.html",
     init: RenderTransaction,
   },
+
   "/login": {
     title: "Login",
     desc: "login page",
     template: "../templates/login.html",
     init: LogInPage,
   },
+
   "/logout": {
-    title: "logout",
+    title: "Logout",
     desc: "logout page",
     template: "../templates/home.html",
     init: logout,
   },
+
   "/progress": {
     title: "Progress",
     desc: "progress page",
     template: "../templates/home.html",
     init: RenderProgress,
   },
+
   404: {
     title: "Page Not Found",
     desc: "Page not Found",
@@ -47,21 +52,60 @@ const getPath = () => {
   return hash || "/";
 };
 
+async function appendBanner() {
+  try {
+    const html = await fetch("../templates/banner.html").then((res) => {
+      if (!res.ok)
+        throw new Error(`HTTP $ {
+            res.status
+          }
+
+          - Banner template not found`);
+      return res.text();
+    });
+
+    document.body.insertAdjacentHTML("beforeend", html);
+
+    const banner = document.querySelector(".banner-popup");
+
+    if (banner) {
+      window.requestAnimationFrame(() => {
+        banner.classList.add("show");
+        setTimeout(() => {
+          banner.classList.remove("show");
+          setTimeout(() => banner.remove(), 300);
+        }, 3000);
+      });
+
+      banner.querySelector(".banner-close")?.addEventListener("click", () => {
+        banner.classList.remove("show");
+        setTimeout(() => banner.remove(), 300);
+      });
+    }
+  } catch (err) {
+    console.warn("Banner injection failed:", err);
+  }
+}
+
 const urlLocationHandler = async () => {
   const location = getPath();
-
   const route = Routes[location] || Routes[404];
 
   try {
     const html = await fetch(route.template).then((res) => {
-      if (!res.ok) throw new Error(`HTTP ${res.status} - Template not found`);
+      if (!res.ok)
+        throw new Error(`HTTP $ {
+            res.status
+          }
+
+          - Template not found`);
       return res.text();
     });
 
     document.getElementById("app").innerHTML = html;
 
     if (typeof route.init === "function") {
-      route.init();
+      await route.init();
     }
 
     document.title = route.title;
@@ -75,13 +119,22 @@ window.addEventListener("click", (e) => {
   if (!anchor) return;
 
   const href = anchor.getAttribute("href");
+  if (!href) return;
 
-  if (href && (href.startsWith("#/") || href.startsWith("/"))) {
+  if (href.startsWith("#/")) {
     e.preventDefault();
-    const cleanPath = href.startsWith("#") ? href : `#${href}`;
-    window.location.hash = cleanPath;
+    window.location.hash = href;
+  }
+
+  if (href === "/logout") {
+    e.preventDefault();
+    window.location.hash = "#/logout";
   }
 });
 
 window.addEventListener("hashchange", urlLocationHandler);
-window.addEventListener("DOMContentLoaded", urlLocationHandler);
+
+window.addEventListener("DOMContentLoaded", async () => {
+  await appendBanner();
+  await urlLocationHandler();
+});

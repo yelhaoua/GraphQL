@@ -1,6 +1,4 @@
-export default async function GetUserTransaction() {
-  const id = localStorage.getItem("user_Id");
-
+export default async function GetUserTransaction(id) {
   if (!id) {
     return {
       success: false,
@@ -33,7 +31,7 @@ query GetTransaction($id: Int!) {
 }
 `;
 
-  const variables = { id };
+  const variables = { id: Number(id) };
   const jwt = localStorage.getItem("jwt_token");
   try {
     const req = await fetch(
@@ -41,7 +39,7 @@ query GetTransaction($id: Int!) {
       {
         method: "POST",
         headers: {
-          "Contente-Type": "application/json",
+          "Content-Type": "application/json",
           authorization: `Bearer ${jwt}`,
         },
         body: JSON.stringify({ query, variables }),
@@ -52,7 +50,7 @@ query GetTransaction($id: Int!) {
     if (!req.ok) {
       return {
         success: false,
-        error: res.error[0].extensions.code,
+        error: res.error?.[0]?.extensions?.code || "Request failed",
       };
     }
     return {

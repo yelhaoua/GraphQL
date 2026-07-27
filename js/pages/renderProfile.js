@@ -3,53 +3,66 @@ import RenderNavBar from "./renderNavBar.js";
 
 export default async function RenderProfile() {
   await RenderNavBar();
-  const id = await localStorage.getItem("user_Id");
+
+  const id = localStorage.getItem("user_Id");
   if (!id) {
-    window.location.href == "#/login";
+    window.location.href = "#/login";
     return;
   }
-  const res = await GetUserInfoAction(id);
+
+  const res = await GetUserInfoAction();
+  if (!res.success || !res.data?.user?.length) {
+    window.location.href = "#/login";
+    return;
+  }
+
+  const user = res.data.user[0];
   const html = await fetch("../../templates/userInfo.html").then((res) =>
     res.text(),
   );
 
   document.querySelector(".dataSection").innerHTML = html;
-  document.querySelector(".profile_Image").src = res.data.user[0].avatarUrl;
-
-  document.querySelector(".user_email").innerHTML = res.data.user[0].email;
-  document.querySelector(".user_login_name").innerHTML = res.data.user[0].login;
-  document.querySelector(".user_campus").innerHTML = res.data.user[0].campus;
+  document.querySelector(".profile_Image").src = user.avatarUrl || "";
+  document.querySelector(".user_fullname").innerHTML =
+    `${user.firstName || ""} ${user.lastName || ""}`.trim();
+  document.querySelector(".user_email").innerHTML = user.email || "N/A";
+  document.querySelector(".user_login_name").innerHTML = user.login || "N/A";
+  document.querySelector(".user_campus").innerHTML = user.campus || "N/A";
   document.querySelector(".auditratio").innerHTML = Number(
-    res.data.user[0].auditRatio,
+    user.auditRatio || 0,
   ).toFixed(3);
   document.querySelector(".user_addressCity").innerHTML =
-    res.data.user[0].attrs.addressCity;
+    user.attrs?.addressCity || "N/A";
   document.querySelector(".user_gender").innerHTML =
-    res.data.user[0].attrs.gender;
-  document.querySelector(".user_tel").innerHTML = res.data.user[0].attrs.tel;
+    user.attrs?.gender || "N/A";
+  document.querySelector(".user_tel").innerHTML = user.attrs?.tel || "N/A";
   document.querySelector(".user_scholarLevel").innerHTML =
-    res.data.user[0].attrs.scholarLevel;
+    user.attrs?.scholarLevel || "N/A";
 
-  let TotalFaile = 0;
-  let TotaleSucceeded = 0;
-  let TotaleProject = 0;
-  res.data.allAudites[0].audits_aggregate.nodes.map((el) => {
+  const audits = res.data.allAudites?.[0]?.audits_aggregate?.nodes || [];
+  let totalFailed = 0;
+  let totalSucceeded = 0;
+
+  audits.forEach((el) => {
     if (el.closureType === "failed") {
-      TotalFaile++;
+      totalFailed++;
     }
     if (el.closureType === "succeeded") {
-      TotaleSucceeded++;
+      totalSucceeded++;
     }
-    TotaleProject++;
   });
 
-  const FialeRate = ((TotalFaile / TotaleProject) * 100).toFixed(2);
-  const SucceededRate = ((TotaleSucceeded / TotaleProject) * 100).toFixed(2);
+  const totalProject = totalFailed + totalSucceeded;
+  const failedRate = totalProject
+    ? ((totalFailed / totalProject) * 100).toFixed(2)
+    : "0.00";
+  const succeededRate = totalProject
+    ? ((totalSucceeded / totalProject) * 100).toFixed(2)
+    : "0.00";
 
   const radius = 100;
   const circumference = 2 * Math.PI * radius;
-
-  const greenPart = (circumference * SucceededRate) / 100;
+  const greenPart = (circumference * Number(succeededRate)) / 100;
 
   const svg = `
 <svg 
@@ -58,8 +71,6 @@ export default async function RenderProfile() {
   height="100%"
   preserveAspectRatio="xMidYMid meet"
 >
-
-
   <circle
     cx="200"
     cy="200"
@@ -68,7 +79,6 @@ export default async function RenderProfile() {
     stroke="red"
     stroke-width="10"
   />
-
   <circle
     cx="200"
     cy="200"
@@ -80,24 +90,25 @@ export default async function RenderProfile() {
     stroke-linecap="round"
     transform="rotate(-90 200 200)"
   />
-
 </svg>
 `;
 
   document.querySelector(".raio_circle_Container").innerHTML = svg;
 
-  const TotaleUp = res.data.allAudites[0].totalUp / 1000000;
-
-  const TotaleDown = res.data.allAudites[0].totalDown / 1000000;
+  const totalUp = (res.data.allAudites?.[0]?.totalUp || 0) / 1000000;
+  const totalDown = (res.data.allAudites?.[0]?.totalDown || 0) / 1000000;
 
   document.querySelector(".succeededrate").innerHTML =
-    `${Math.round(SucceededRate)}%`;
+    `${Math.round(Number(succeededRate))}%`;
+  document.querySelector(".fialerate").innerHTML = `${failedRate}%`;
   document.querySelector(".totaleUpValue").innerHTML = `${
-    TotaleUp >= 1 ? ` ${TotaleUp.toFixed(2)} MB` : ` ${TotaleUp.toFixed(2)} KB`
+    totalUp >= 1
+      ? `${totalUp.toFixed(2)} MB`
+      : `${(totalUp * 1000).toFixed(2)} KB`
   }`;
-  document.querySelector(".fialerate").innerHTML = `${
-    TotaleDown >= 1
-      ? ` ${TotaleDown.toFixed(2)} MB`
-      : ` ${TotaleDown.toFixed(2)} KB`
+  document.querySelector(".totaleDownValue").innerHTML = `${
+    totalDown >= 1
+      ? `${totalDown.toFixed(2)} MB`
+      : `${(totalDown * 1000).toFixed(2)} KB`
   }`;
 }

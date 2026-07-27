@@ -21,7 +21,7 @@ query{
       {
         method: "POST",
         headers: {
-          "Contente-Type": "application/json",
+          "Content-Type": "application/json",
           authorization: `Bearer ${jwt}`,
         },
         body: JSON.stringify({ query }),
