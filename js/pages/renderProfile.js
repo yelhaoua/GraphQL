@@ -1,16 +1,20 @@
-export default async function RenderProfile(res) {
+import GetUserInfoAction from "./actions/userInfroAction.js";
+import RenderNavBar from "./renderNavBar.js";
+
+export default async function RenderProfile() {
+  RenderNavBar();
+  const id = localStorage.getItem("user_Id");
+  if (!id) { 
+    //Banner
+    return
+  }
+  const res = await GetUserInfoAction(id);
   const html = await fetch("../../templates/userInfo.html").then((res) =>
     res.text(),
   );
-  console.log(html);
-
   document.querySelector(".dataSection").innerHTML = html;
-  document.querySelector(".user_image").src = res.data.user[0].avatarUrl;
-  document.querySelector(".user_login").innerHTML =
-    res.data.user[0].firstName + " " + res.data.user[0].lastName;
   document.querySelector(".profile_Image").src = res.data.user[0].avatarUrl;
-  document.querySelector(".user_fullname").innerHTML =
-    res.data.user[0].firstName + " " + res.data.user[0].lastName;
+
   document.querySelector(".user_email").innerHTML = res.data.user[0].email;
   document.querySelector(".user_login_name").innerHTML = res.data.user[0].login;
   document.querySelector(".user_campus").innerHTML = res.data.user[0].campus;

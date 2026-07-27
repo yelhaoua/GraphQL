@@ -1,5 +1,6 @@
 import LogInPage from "./auth/logIn-page.js";
-import GetUserInfo from "./pages/getUserInfo.js";
+import RenderProfile from "./pages/renderProfile.js";
+import RenderProgress from "./pages/renderProgress.js";
 import RenderTransaction from "./pages/renderTransactions.js";
 
 const Routes = {
@@ -7,7 +8,7 @@ const Routes = {
     title: "profile",
     desc: "profile page",
     template: "../templates/home.html",
-    init: GetUserInfo,
+    init: RenderProfile,
   },
   "/transaction": {
     title: "transaction",
@@ -20,6 +21,12 @@ const Routes = {
     desc: "login page",
     template: "../templates/login.html",
     init: LogInPage,
+  },
+  "/progress": {
+    title: "Progress",
+    desc: "progress page",
+    template: "../templates/home.html",
+    init: RenderProgress,
   },
   404: {
     title: "Page Not Found",

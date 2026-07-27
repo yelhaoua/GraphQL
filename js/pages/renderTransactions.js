@@ -1,21 +1,15 @@
-import GetUserInfoAction from "./actions/userInfroAction.js";
 import GetUserTransaction from "./actions/userTransactions.js";
-import GetUserInfo from "./getUserInfo.js";
-import RenderProfile from "./renderProfile.js";
+import RenderNavBar from "./renderNavBar.js";
 
 export default async function RenderTransaction() {
-  let res = await GetUserInfoAction();
-  console.log(res);
-  if (!res.success) {
+  RenderNavBar();
+  const id = localStorage.getItem("user_Id");
+  if (!id) {
     //Banner
     return;
   }
-  console.log(res.data.user[0].id);
 
-  localStorage.setItem("user_Id", res.data.user[0].id);
-
-  RenderProfile(res);
-   res = await GetUserTransaction();
+  let res = await GetUserTransaction(id);
   if (!res.success) {
     //Banner
     return;
