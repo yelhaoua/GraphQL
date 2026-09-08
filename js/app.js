@@ -1,5 +1,6 @@
 import LogInPage from "./auth/logIn-page.js";
 import logout from "./auth/logout.js";
+import RenderNOtfound from "./pages/renderNotFound.js";
 import RenderProfile from "./pages/renderProfile.js";
 import RenderProgress from "./pages/renderProgress.js";
 import RenderTransaction from "./pages/renderTransactions.js";
@@ -43,7 +44,8 @@ const Routes = {
   404: {
     title: "Page Not Found",
     desc: "Page not Found",
-    template: "../templates/home.html",
+    template: "../templates/404.html",
+    init: RenderNOtfound,
   },
 };
 
