@@ -57,7 +57,6 @@ It is designed as a client-side dashboard for checking account data without usin
 │           └── userTransactions.js
 ├── templates/
 │   ├── 404.html
-│   ├── banner.html
 │   ├── home.html
 │   ├── login.html
 │   ├── progress.html

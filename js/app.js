@@ -54,40 +54,7 @@ const getPath = () => {
   return hash || "/";
 };
 
-async function appendBanner() {
-  try {
-    const html = await fetch("../templates/banner.html").then((res) => {
-      if (!res.ok)
-        throw new Error(`HTTP $ {
-            res.status
-          }
 
-          - Banner template not found`);
-      return res.text();
-    });
-
-    document.body.insertAdjacentHTML("beforeend", html);
-
-    const banner = document.querySelector(".banner-popup");
-
-    if (banner) {
-      window.requestAnimationFrame(() => {
-        banner.classList.add("show");
-        setTimeout(() => {
-          banner.classList.remove("show");
-          setTimeout(() => banner.remove(), 300);
-        }, 3000);
-      });
-
-      banner.querySelector(".banner-close")?.addEventListener("click", () => {
-        banner.classList.remove("show");
-        setTimeout(() => banner.remove(), 300);
-      });
-    }
-  } catch (err) {
-    console.warn("Banner injection failed:", err);
-  }
-}
 
 const urlLocationHandler = async () => {
   const location = getPath();
@@ -137,6 +104,6 @@ window.addEventListener("click", (e) => {
 window.addEventListener("hashchange", urlLocationHandler);
 
 window.addEventListener("DOMContentLoaded", async () => {
-  await appendBanner();
+ 
   await urlLocationHandler();
 });
