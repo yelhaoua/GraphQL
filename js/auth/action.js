@@ -1,5 +1,7 @@
 export default async function LogInAction(data) {
-  const credentials = btoa(`${data.username}:${data.password}`);
+  const credentials = btoa(
+    unescape(encodeURIComponent(`${data.username}:${data.password}`)),
+  );
 
   try {
     const req = await fetch("https://learn.zone01oujda.ma/api/auth/signin", {
