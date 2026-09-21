@@ -6,10 +6,12 @@ export default async function GetUserTransaction(id) {
     };
   }
 
+  const reqID = Number(id);
+
   const query = `
-query GetTransaction($id: Int!) {
+{
   transaction(
-    where: {userId: {_eq: $id}, event: {object: {name: {_eq: "Module"}}}, type: {_eq: "xp"}, progress: {isDone: {_eq: true}}}
+    where: {userId: {_eq: ${reqID}}, event: {object: {name: {_eq: "Module"}}}, type: {_eq: "xp"}, progress: {isDone: {_eq: true}}}
     order_by: {createdAt: desc}
   ) {
     amount
@@ -42,7 +44,7 @@ query GetTransaction($id: Int!) {
           "Content-Type": "application/json",
           authorization: `Bearer ${jwt}`,
         },
-        body: JSON.stringify({ query, variables }),
+        body: JSON.stringify({ query }),
       },
     );
 
