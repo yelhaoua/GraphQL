@@ -2,6 +2,10 @@
 
 A lightweight single-page web app for viewing a student profile, progress, and transactions from the Zone01 platform using GraphQL and JWT-based authentication.
 
+## Live Demo
+
+[Open the live demo](https://01zone-graphql.netlify.app/)
+
 ## Overview
 
 This project is a vanilla JavaScript frontend that:
